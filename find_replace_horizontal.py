@@ -61,8 +61,8 @@ class TEXT_HT_header(Header):
 
                 row = layout.row()
                 row.operator("text.run_script")
-
-
+    
+        
 bpy.types.WindowManager.toggle_find_search = bpy.props.BoolProperty()
 
 
@@ -73,15 +73,15 @@ class TEXT_OT_toggle_find(bpy.types.Operator):
 
     def execute(self, context):
         wm = context.window_manager
-        if wm.toggle_find_search is False:
+        if wm.toggle_find_search == False:
             wm.toggle_find_search = True
         else:
-            wm.toggle_find_search = False
+            wm.toggle_find_search = False   
             st = context.space_data
             s = self.get_selected_text(st.text)
             if s is not None:
                 bpy.context.space_data.find_text = s
-
+                 
         bpy.context.space_data.text = bpy.context.space_data.text #  Refresh footer
 
         return {'FINISHED'}
@@ -166,33 +166,33 @@ class TEXT_HT_footer(Header):
                         if text.library
                         else "Text: Internal",
                     )
-            else:
-                layout = self.layout
+            else:                    
+                layout = self.layout              
                 st = context.space_data
 
                 # find
                 col = layout.column()
                 row = col.row(align=True)
-
-                row.operator("text.find_set_selected", text="", icon='EYEDROPPER')
-                subrow = row.split()
+                
+                row.operator("text.find_set_selected", text="", icon='EYEDROPPER') 
+                subrow = row.split()     
                 subrow.prop(st, "find_text", text="")
                 subrow.activate_init = True
-                row.operator("text.find", text="Find Next")
+                row.operator("text.find", text="Find Next")        
 
                 layout.separator_spacer()
 
-                # replace
+                # replace                        
                 col = layout.column()
                 row = col.row(align=True)
-                row.operator("text.replace_set_selected", text="", icon='EYEDROPPER')
+                row.operator("text.replace_set_selected", text="", icon='EYEDROPPER')        
                 row.prop(st, "replace_text", text="")
-                row.operator("text.replace", text="Replace")
+                row.operator("text.replace", text="Replace")        
 
                 layout.separator_spacer()
 
-                # settings
-                row = layout.row(align=True)
+                # settings                   
+                row = layout.row(align=True)      
                 if not st.text:
                     row.active = False
                 row.prop(st, "use_match_case", text="Case", toggle=True)
@@ -202,7 +202,7 @@ class TEXT_HT_footer(Header):
                 layout.separator_spacer()
 
                 col = layout.column()
-                row = col.row(align=False)
+                row = col.row(align=False)       
                 row.prop(wm, 'toggle_find_search', text="", icon="X", toggle=True)
 
 
@@ -396,8 +396,7 @@ class TEXT_MT_format(Menu):
 
         layout.separator()
 
-        layout.operator("text.comment")
-        layout.operator("text.uncomment")
+        layout.operator("text.text.comment_toggle")
 
         layout.separator()
 
@@ -508,3 +507,4 @@ if __name__ == "__main__":  # only for live edit.
     from bpy.utils import register_class
     for cls in classes:
         register_class(cls)
+
