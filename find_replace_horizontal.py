@@ -172,10 +172,12 @@ class TEXT_HT_footer(Header):
 
                 # find
                 col = layout.column()
+                #col = col.scale_x = 1.6
                 row = col.row(align=True)
-                
+
                 row.operator("text.find_set_selected", text="", icon='EYEDROPPER') 
-                subrow = row.split()     
+                subrow = row.split()
+                subrow.scale_x = 1.6     
                 subrow.prop(st, "find_text", text="")
                 subrow.activate_init = True
                 row.operator("text.find", text="Find Next")        
@@ -185,19 +187,21 @@ class TEXT_HT_footer(Header):
                 # replace                        
                 col = layout.column()
                 row = col.row(align=True)
-                row.operator("text.replace_set_selected", text="", icon='EYEDROPPER')        
-                row.prop(st, "replace_text", text="")
+                row.operator("text.replace_set_selected", text="", icon='EYEDROPPER')
+                subrow = row.split()
+                subrow.scale_x = 1.6         
+                subrow.prop(st, "replace_text", text="")
                 row.operator("text.replace", text="Replace")        
 
                 layout.separator_spacer()
 
                 # settings                   
-                row = layout.row(align=True)      
+                row = layout.row(align=False)      
                 if not st.text:
                     row.active = False
-                row.prop(st, "use_match_case", text="Case", toggle=True)
-                row.prop(st, "use_find_wrap", text="Wrap", toggle=True)
-                row.prop(st, "use_find_all", text=" All ", toggle=True)
+                row.prop(st, "use_match_case", text="", toggle=True, icon="SMALL_CAPS")    # case
+                row.prop(st, "use_find_wrap", text="", toggle=True, icon="LOOP_BACK")  # warp
+                row.prop(st, "use_find_all", text="", toggle=True, icon="DUPLICATE")  # all
 
                 layout.separator_spacer()
 
@@ -507,4 +511,3 @@ if __name__ == "__main__":  # only for live edit.
     from bpy.utils import register_class
     for cls in classes:
         register_class(cls)
-
